@@ -18,36 +18,6 @@ snippet stack\n\
 snippet queue\n\
 	queue<${1:T}> ${2};${3}\n\
 ##\n\
-## Access Modifiers\n\
-# private\n\
-snippet pri\n\
-	private\n\
-# protected\n\
-snippet pro\n\
-	protected\n\
-# public\n\
-snippet pub\n\
-	public\n\
-# friend\n\
-snippet fr\n\
-	friend\n\
-# mutable\n\
-snippet mu\n\
-	mutable\n\
-## \n\
-## Class\n\
-# class\n\
-snippet cl\n\
-	class ${1:`Filename('$1', 'name')`} \n\
-	{\n\
-	public:\n\
-		$1(${2});\n\
-		~$1();\n\
-\n\
-	private:\n\
-		${3:/* data */}\n\
-	};\n\
-##\n\
 ## Input/Output\n\
 # cout\n\
 snippet cout\n\
