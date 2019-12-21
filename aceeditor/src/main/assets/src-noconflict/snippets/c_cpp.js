@@ -47,16 +47,6 @@ snippet cl\n\
 	private:\n\
 		${3:/* data */}\n\
 	};\n\
-# member function implementation\n\
-snippet mfun\n\
-	${4:void} ${1:`Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {\n\
-		${5:/* code */}\n\
-	}\n\
-# namespace\n\
-snippet ns\n\
-	namespace ${1:`Filename('', 'my')`} {\n\
-		${2}\n\
-	} /* namespace $1 */\n\
 ##\n\
 ## Input/Output\n\
 # cout\n\
@@ -73,32 +63,8 @@ snippet fori\n\
 		${4:/* code */}\n\
 	}${5}\n\
 \n\
-# foreach\n\
-snippet fore\n\
-	for (${1:auto} ${2:i} : ${3:container}) {\n\
-		${4:/* code */}\n\
-	}${5}\n\
-# iterator\n\
-snippet iter\n\
-	for (${1:vector}<${2:type}>::${3:const_iterator} ${4:i} = ${5:container}.begin(); $4 != $5.end(); ++$4) {\n\
-		${6}\n\
-	}${7}\n\
-\n\
-# auto iterator\n\
-snippet itera\n\
-	for (auto ${1:i} = $1.begin(); $1 != $1.end(); ++$1) {\n\
-		${2:cout << *$1 << endl;}\n\
-	}${3}\n\
 ##\n\
-## Lambdas\n\
-# lamda (one line)\n\
-snippet ld\n\
-	[${1}](${2}){${3:/* code */}}${4}\n\
-# lambda (multi-line)\n\
-snippet lld\n\
-	[${1}](${2}){\n\
-		${3:/* code */}\n\
-	}${4}\n\
+## include\n\
 # include\n\
 snippet include\n\
 	#include <${1}>\n\
