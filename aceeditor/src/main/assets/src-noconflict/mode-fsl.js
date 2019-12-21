@@ -1,36 +1,90 @@
-ace.define("ace/mode/mipsassembler_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
+ace.define("ace/mode/fsl_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
-var mipsassemblerHighlightRules = function() {
+var FSLHighlightRules = function() {
 
     this.$rules = {
-            start: [{
-                token: "string.start",
-                regex: '"',
-                next: "qstring"
-            }],
-            qstring: [{
-                token: "escape",
-                regex: /\\./,
+        start: [{
+            token: "punctuation.definition.comment.mn",
+            regex: /\/\*/,
+            push: [{
+                token: "punctuation.definition.comment.mn",
+                regex: /\*\//,
+                next: "pop"
             }, {
-                token: "string.end",
-                regex: '"',
-                next: "start"
+                defaultToken: "comment.block.fsl"
+            }]
+        }, {
+            token: "comment.line.fsl",
+            regex: /\/\//,
+            push: [{
+                token: "comment.line.fsl",
+                regex: /$/,
+                next: "pop"
+            }, {
+                defaultToken: "comment.line.fsl"
+            }]
+        }, {
+            token: "entity.name.function",
+            regex: /\${/,
+            push: [{
+                token: "entity.name.function",
+                regex: /}/,
+                next: "pop"
+            }, {
+                defaultToken: "keyword.other"
             }],
-        }
-    
+            comment: "js outcalls"
+        }, {
+            token: "constant.numeric",
+            regex: /[0-9]*\.[0-9]*\.[0-9]*/,
+            comment: "semver"
+        }, {
+            token: "constant.language.fslLanguage",
+            regex: "(?:"
+                + "graph_layout|machine_name|machine_author|machine_license|machine_comment|machine_language"
+                + "|machine_version|machine_reference|npm_name|graph_layout|on_init|on_halt|on_end|on_terminate|on_finalize|on_transition"
+                + "|on_action|on_stochastic_action|on_legal|on_main|on_forced|on_validation|on_validation_failure|on_transition_refused|on_forced_transition_refused"
+                + "|on_action_refused|on_enter|on_exit|start_states|end_states|terminal_states|final_states|fsl_version"
+                + ")\\s*:"
+        }, {
+            token: "keyword.control.transition.fslArrow",
+            regex: /<->|<-|->|<=>|=>|<=|<~>|~>|<~|<-=>|<=->|<-~>|<~->|<=~>|<~=>/
+        }, {
+            token: "constant.numeric.fslProbability",
+            regex: /[0-9]+%/,
+            comment: "edge probability annotation"
+        }, {
+            token: "constant.character.fslAction",
+            regex: /\'[^']*\'/,
+            comment: "action annotation"
+        }, {
+            token: "string.quoted.double.fslLabel.doublequoted",
+            regex: /\"[^"]*\"/,
+            comment: "fsl label annotation"
+        }, {
+            token: "entity.name.tag.fslLabel.atom",
+            regex: /[a-zA-Z0-9_.+&()#@!?,]/,
+            comment: "fsl label annotation"
+        }]
+    };
+
     this.normalizeRules();
 };
 
-mipsassemblerHighlightRules.metaData = 
+FSLHighlightRules.metaData = {
+    fileTypes: ["fsl", "fsl_state"],
+    name: "FSL",
+    scopeName: "source.fsl"
+};
 
 
-oop.inherits(mipsassemblerHighlightRules, TextHighlightRules);
+oop.inherits(FSLHighlightRules, TextHighlightRules);
 
-exports.mipsassemblerHighlightRules = mipsassemblerHighlightRules;
+exports.FSLHighlightRules = FSLHighlightRules;
 });
 
 ace.define("ace/mode/folding/cstyle",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports, module) {
@@ -54,11 +108,11 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 (function() {
     
-    this.foldingStartMarker = /(\{|\[)[^\}\]]*$|^\s*(\/\*)/;
-    this.foldingStopMarker = /^[^\[\{]*(\}|\])|^[\s\*]*(\*\/)/;
+    this.foldingStartMarker = /([\{\[\(])[^\}\]\)]*$|^\s*(\/\*)/;
+    this.foldingStopMarker = /^[^\[\{\(]*([\}\]\)])|^[\s\*]*(\*\/)/;
     this.singleLineBlockCommentRe= /^\s*(\/\*).*\*\/\s*$/;
     this.tripleStarBlockCommentRe = /^\s*(\/\*\*\*).*\*\/\s*$/;
-    this.startRegionRe = /^\s*(\/\*|\/\/)#region\b/;
+    this.startRegionRe = /^\s*(\/\*|\/\/)#?region\b/;
     this._getFoldWidgetBase = this.getFoldWidget;
     this.getFoldWidget = function(session, foldStyle, row) {
         var line = session.getLine(row);
@@ -146,13 +200,12 @@ oop.inherits(FoldMode, BaseFoldMode);
         
         return new Range(startRow, startColumn, endRow, session.getLine(endRow).length);
     };
-    
     this.getCommentRegionBlock = function(session, line, row) {
         var startColumn = line.search(/\s*$/);
         var maxRow = session.getLength();
         var startRow = row;
         
-        var re = /^\s*(?:\/\*|\/\/)#(end)?region\b/;
+        var re = /^\s*(?:\/\*|\/\/|--)#?(end)?region\b/;
         var depth = 1;
         while (++row < maxRow) {
             line = session.getLine(row);
@@ -174,23 +227,32 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define("ace/mode/mipsassembler",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/mipsassembler_highlight_rules","ace/mode/folding/cstyle"], function(require, exports, module) {
+ace.define("ace/mode/fsl",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/fsl_highlight_rules","ace/mode/folding/cstyle"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
 var TextMode = require("./text").Mode;
-var HighlightRules = require("./mipsassembler_highlight_rules").HighlightRules;
+var FSLHighlightRules = require("./fsl_highlight_rules").FSLHighlightRules;
 var FoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = HighlightRules;
+    this.HighlightRules = FSLHighlightRules;
     this.foldingRules = new FoldMode();
 };
 oop.inherits(Mode, TextMode);
 
 (function() {
-    this.$id = "ace/mode/mipsassembler"
+    this.lineCommentStart = "//";
+    this.blockComment = {start: "/*", end: "*/"};
+    this.$id = "ace/mode/fsl";
 }).call(Mode.prototype);
 
 exports.Mode = Mode;
-});
+});                (function() {
+                    ace.require(["ace/mode/fsl"], function(m) {
+                        if (typeof module == "object" && typeof exports == "object" && module) {
+                            module.exports = m;
+                        }
+                    });
+                })();
+            
