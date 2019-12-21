@@ -55,6 +55,12 @@ snippet cout\n\
 # cin\n\
 snippet cin\n\
 	cin >> ${1};${2}\n\
+# printf\n\
+snippet printf\n\
+	printf(\"${1}\", ${2});${3}\n\
+# scanf\n\
+snippet scanf\n\
+	scanf(\"${1}\", ${2})${3}\n\
 ##\n\
 ## Iteration\n\
 # for i \n\
@@ -77,6 +83,14 @@ snippet iostream\n\
 # stdio\n\
 snippet stdio\n\
 	#include <stdio.h>\n\
+##\n\
+## main\n\
+# main\n\
+snippet main\n\
+	int main(){\n\
+	    ${1}\n\
+	    return 0;\n\
+	}\n\
 ";
 exports.scope = "c_cpp";
 
