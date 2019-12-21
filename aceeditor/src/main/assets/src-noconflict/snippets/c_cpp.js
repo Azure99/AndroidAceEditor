@@ -48,10 +48,10 @@ snippet include\n\
 snippet std\n\
 	using namespace std;\n\
 # iostream\n\
-snippet iostream\n\
+snippet iiostream\n\
 	#include <iostream>\n\
 # stdio\n\
-snippet stdio\n\
+snippet istdio\n\
 	#include <stdio.h>\n\
 ##\n\
 ## main\n\
