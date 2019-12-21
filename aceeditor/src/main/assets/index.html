@@ -25,6 +25,11 @@
 <script>
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
+	editor.setOptions({
+	    enableBasicAutocompletion: true,
+	    enableSnippets: true,
+	    enableLiveAutocompletion: true
+    });
     function gettext()
     {
         alert(editor.getValue());
