@@ -407,6 +407,14 @@ public class AceEditor extends WebView
         loadUrl("javascript:editor.insert(\"" + text +"\");");
     }
 
+    public void moveCursorForward(int pos)
+    {
+        String command =
+                "javascript:var pos=editor.getCursorPosition();" +
+                "pos.column=(pos.column-" + pos +"<0?0:pos.column-"+pos+");" +
+                "editor.moveCursorToPosition(pos);";
+        loadUrl(command);
+    }
 
     public void requestText()
     {
