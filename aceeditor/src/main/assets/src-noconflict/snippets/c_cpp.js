@@ -27,7 +27,7 @@ snippet cin\n\
 	cin >> ${1};${2}\n\
 # printf\n\
 snippet printf\n\
-	printf(\"${1}\", ${2});${3}\n\
+	printf(\"${1}\");${2}\n\
 # scanf\n\
 snippet scanf\n\
 	scanf(\"${1}\", ${2})${3}\n\
@@ -58,8 +58,8 @@ snippet istdio\n\
 # main\n\
 snippet main\n\
 	int main(){\n\
-	    ${1}\n\
-	    return 0;\n\
+		${1}\n\
+		return 0;\n\
 	}\n\
 ";
 exports.scope = "c_cpp";
