@@ -32,7 +32,7 @@ snippet lswtich\n\
 ##\n\
 ## include\n\
 # include\n\
-snippet include\n\
+snippet iinclude\n\
 	#include <${1}>\n\
 # using namespace std\n\
 snippet std\n\
@@ -46,8 +46,8 @@ snippet istdio\n\
 ##\n\
 ## main\n\
 # main\n\
-snippet main\n\
-	int main(){\n\
+snippet fmain\n\
+	int main() {\n\
 		${1}\n\
 		return 0;\n\
 	}\n\
