@@ -66,7 +66,7 @@ var c_cppHighlightRules = function() {
     var storageType = (
         "auto|bool|char|double|enum|float|" +
         "int|long|short|signed|struct|typedef|union|unsigned|void|" +
-        "class|template"
+        "class|template|string|vector|queue|map|stack|set"
     );
 
     var storageModifiers = (
