@@ -3822,7 +3822,7 @@ exports.addTouchListeners = function(el, editor) {
                     selected && ["span", { class: "ace_mobile-button", action: "cut" }, "剪切"],
                     clipboard && ["span", { class: "ace_mobile-button", action: "paste" }, "粘贴"],
                     hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "撤销"],
-                    ["span", { class: "ace_mobile-button", action: "find" }, "寻找"],
+                    ["span", { class: "ace_mobile-button", action: "find" }, "查找"],
                     ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "选项板"]
                 ] : ["span"]),
                 contextMenu.firstChild
