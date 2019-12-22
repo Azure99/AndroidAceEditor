@@ -3817,13 +3817,13 @@ exports.addTouchListeners = function(el, editor) {
             var hasUndo = editor.session.getUndoManager().hasUndo();
             contextMenu.replaceChild(
                 dom.buildDom(isOpen ? ["span",
-                    !selected && ["span", { class: "ace_mobile-button", action: "selectall" }, "Select All"],
-                    selected && ["span", { class: "ace_mobile-button", action: "copy" }, "Copy"],
-                    selected && ["span", { class: "ace_mobile-button", action: "cut" }, "Cut"],
-                    clipboard && ["span", { class: "ace_mobile-button", action: "paste" }, "Paste"],
-                    hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "Undo"],
-                    ["span", { class: "ace_mobile-button", action: "find" }, "Find"],
-                    ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "Pallete"]
+                    !selected && ["span", { class: "ace_mobile-button", action: "selectall" }, "全选"],
+                    selected && ["span", { class: "ace_mobile-button", action: "copy" }, "复制"],
+                    selected && ["span", { class: "ace_mobile-button", action: "cut" }, "剪切"],
+                    clipboard && ["span", { class: "ace_mobile-button", action: "paste" }, "粘贴"],
+                    hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "撤销"],
+                    ["span", { class: "ace_mobile-button", action: "find" }, "寻找"],
+                    ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "选项板"]
                 ] : ["span"]),
                 contextMenu.firstChild
             );
