@@ -80,6 +80,10 @@ public class AceEditor extends WebView
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode() == 0) {
+            insertTextAtCursor(event.getCharacters().toString());
+            return true;
+        }
         return super.dispatchKeyEvent(event);
 
     }
