@@ -1,40 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ACE in Action</title>
-<style type="text/css" media="screen">
-    #editor { 
-        position: absolute;
-        display: inline-block;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-</style>
+  <title>ACE in Action</title>
 </head>
 <body>
-
-<div id="editor">
-</div>
-
-<script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="./src-noconflict/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    ace.require("ace/ext/language_tools");
-    var editor = ace.edit("editor");
-	editor.setOptions({
-	    enableBasicAutocompletion: true,
-	    enableSnippets: true,
-	    enableLiveAutocompletion: true
-    });
-    function gettext()
-    {
-        alert(editor.getValue());
+    var localLang = (navigator.browserLanguage || navigator.language).toLowerCase();
+    if (localLang === "zh-cn") {
+        location.href = "ace-cn.html";
+    } else {
+        location.href = "ace.html";
     }
 </script>
 </body>
 </html>
-
