@@ -19,9 +19,16 @@ snippet scanf\n\
 # for i \n\
 snippet lfor\n\
 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {\n\
-		${4:/* code */}\n\
+		${4}\n\
 	}${5}\n\
-\n\
+snippet lwhile\n\
+	while (${1}) {\n\
+		${2}\n\
+	}${3}\n\
+snippet lswtich\n\
+	switch (${1}) {\n\
+		default: ${2};\n\
+	}${3}\n\
 ##\n\
 ## include\n\
 # include\n\
