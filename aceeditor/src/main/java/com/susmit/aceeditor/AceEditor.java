@@ -29,8 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AceEditor extends WebView
-{
+public class AceEditor extends WebView {
     Context context;
     private PopupWindow pw;
     private View popupView;
@@ -51,12 +50,11 @@ public class AceEditor extends WebView
     private OnTouchListener scroller;
     private OnTouchListener selector;
 
-    public static int ACTION_SCROLL=1;
-    public static int ACTION_SELECT=0;
+    public static int ACTION_SCROLL = 1;
+    public static int ACTION_SELECT = 0;
 
     @SuppressLint("SetJavaScriptEnabled")
-    public AceEditor(Context context)
-    {
+    public AceEditor(Context context) {
         super(context);
         loadedUI = false;
         this.context = context;
@@ -65,8 +63,7 @@ public class AceEditor extends WebView
 
 
     @SuppressLint("SetJavaScriptEnabled")
-    public AceEditor(Context context, AttributeSet attrs)
-    {
+    public AceEditor(Context context, AttributeSet attrs) {
         super(context, attrs);
         loadedUI = false;
         this.context = context;
@@ -80,17 +77,18 @@ public class AceEditor extends WebView
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode() == 0) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_UNKNOWN &&
+                event.getAction() == KeyEvent.ACTION_MULTIPLE) {
             insertTextAtCursor(event.getCharacters().toString());
             return true;
         }
         return super.dispatchKeyEvent(event);
 
     }
+
     @SuppressLint("SetJavaScriptEnabled")
-    private void initialize()
-    {
-        inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+    private void initialize() {
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         actAfterSelect = true;
         initPopup();
@@ -148,12 +146,10 @@ public class AceEditor extends WebView
                 List<String> results = new LinkedList<>();
                 try {
                     JSONArray objArr = new JSONArray(message);
-                    for(int i = 0; i<objArr.length(); i++) {
+                    for (int i = 0; i < objArr.length(); i++) {
                         results.add(String.valueOf(objArr.get(i)));
                     }
-                }
-                catch (JSONException e)
-                {
+                } catch (JSONException e) {
                     try {
                         JSONObject obj = new JSONObject(message);
                         Iterator<String> keyInerator = obj.keys();
@@ -161,12 +157,11 @@ public class AceEditor extends WebView
                             String key = keyInerator.next();
                             results.add(String.valueOf(obj.get(key)));
                         }
-                    }
-                    catch (JSONException e1) {
+                    } catch (JSONException e1) {
                         results.add(message);
                     }
                 }
-                String []res = new String[results.size()];
+                String[] res = new String[results.size()];
                 res = results.toArray(res);
                 received.onReceived(requestedValue, res);
                 return true;
@@ -176,8 +171,7 @@ public class AceEditor extends WebView
         setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                if(!loadedUI)
-                {
+                if (!loadedUI) {
                     loadedUI = true;
                     onLoadedEditorListener.onCreate();
                 }
@@ -190,26 +184,24 @@ public class AceEditor extends WebView
         });
 
 
-        selector=new View.OnTouchListener()
-        {
+        selector = new View.OnTouchListener() {
             float downTime;
             int xtimes;
             int ytimes;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         downTime = event.getEventTime();
-                        x=event.getX();
-                        y=event.getY();
+                        x = event.getX();
+                        y = event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
                         float tot = SystemClock.uptimeMillis() - downTime;
                         x = event.getX();
                         y = event.getY();
-                        if(tot <= 500)
+                        if (tot <= 500)
                             v.performClick();
                         else {
                             if (actAfterSelect)
@@ -222,21 +214,18 @@ public class AceEditor extends WebView
                         ytimes = (int) (y - event.getY()) / 60;
                         if (xtimes > 0) {
                             v.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT, xtimes, KeyEvent.META_SHIFT_ON));
-                            x=event.getX();
-                        }
-                        else if(xtimes < 0)
-                        {
+                            x = event.getX();
+                        } else if (xtimes < 0) {
                             v.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT, -xtimes, KeyEvent.META_SHIFT_ON));
-                            x=event.getX();
+                            x = event.getX();
                         }
 
                         if (ytimes > 0) {
                             v.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP, ytimes, KeyEvent.META_SHIFT_ON));
-                            y=event.getY();
-                        }
-                        else if(ytimes < 0) {
+                            y = event.getY();
+                        } else if (ytimes < 0) {
                             v.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN, -ytimes, KeyEvent.META_SHIFT_ON));
-                            y=event.getY();
+                            y = event.getY();
                         }
                         break;
                 }
@@ -248,15 +237,15 @@ public class AceEditor extends WebView
             float downTime;
             int xtimes;
             int ytimes;
+
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         downTime = event.getEventTime();
-                        x=event.getX();
-                        y=event.getY();
+                        x = event.getX();
+                        y = event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
                         x = event.getX();
@@ -265,7 +254,7 @@ public class AceEditor extends WebView
                     case MotionEvent.ACTION_MOVE:
                         xtimes = (int) (x - event.getX());
                         ytimes = (int) (y - event.getY());
-                        scrollBy(xtimes,ytimes);
+                        scrollBy(xtimes, ytimes);
                         break;
                 }
                 return false;
@@ -277,8 +266,8 @@ public class AceEditor extends WebView
         setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(!pw.isShowing())
-                    pw.showAtLocation(v, Gravity.NO_GRAVITY,(int)x - getResources().getDisplayMetrics().widthPixels/3,getResources().getDisplayMetrics().heightPixels/12 + (int)y);
+                if (!pw.isShowing())
+                    pw.showAtLocation(v, Gravity.NO_GRAVITY, (int) x - getResources().getDisplayMetrics().widthPixels / 3, getResources().getDisplayMetrics().heightPixels / 12 + (int) y);
                 return true;
             }
         });
@@ -287,17 +276,16 @@ public class AceEditor extends WebView
     }
 
     @SuppressLint("InflateParams")
-    private void initPopup()
-    {
+    private void initPopup() {
         pw = new PopupWindow(context);
-        pw.setHeight(getResources().getDisplayMetrics().heightPixels/15);
-        pw.setWidth(75*getResources().getDisplayMetrics().widthPixels/100);
+        pw.setHeight(getResources().getDisplayMetrics().heightPixels / 15);
+        pw.setWidth(75 * getResources().getDisplayMetrics().widthPixels / 100);
         pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pw.setElevation(50.0f);
         pw.setOutsideTouchable(true);
         pw.setTouchable(true);
 
-        popupView = inflater.inflate(R.layout.webview_dialog_set_1,null);
+        popupView = inflater.inflate(R.layout.webview_dialog_set_1, null);
 
         final View optSet1 = popupView.findViewById(R.id.optSet1);
         final View optSet2 = popupView.findViewById(R.id.optSet2);
@@ -362,7 +350,7 @@ public class AceEditor extends WebView
         popupView.findViewById(R.id.redo).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AceEditor.this.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_Z, 0, KeyEvent.META_CTRL_ON|KeyEvent.META_SHIFT_ON));
+                AceEditor.this.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_Z, 0, KeyEvent.META_CTRL_ON | KeyEvent.META_SHIFT_ON));
                 onSelectionActionPerformedListener.onRedo();
             }
         });
@@ -376,169 +364,144 @@ public class AceEditor extends WebView
         pw.setContentView(popupView);
     }
 
-    public void setResultReceivedListener(ResultReceivedListener listener)
-    {
+    public void setResultReceivedListener(ResultReceivedListener listener) {
         this.received = listener;
     }
 
-    public void setOnLoadedEditorListener(OnLoadedEditorListener listener)
-    {
+    public void setOnLoadedEditorListener(OnLoadedEditorListener listener) {
         this.onLoadedEditorListener = listener;
     }
 
-    public void setOnSelectionActionPerformedListener(OnSelectionActionPerformedListener listener)
-    {
+    public void setOnSelectionActionPerformedListener(OnSelectionActionPerformedListener listener) {
         this.onSelectionActionPerformedListener = listener;
     }
 
-    public void showOptionsAfterSelection(boolean show)
-    {
+    public void showOptionsAfterSelection(boolean show) {
         actAfterSelect = show;
     }
 
-    public void setText(String text)
-    {
-        loadUrl("javascript:editor.session.setValue(\"" + text +"\");");
+    public void setText(String text) {
+        loadUrl("javascript:editor.session.setValue(\"" + text + "\");");
     }
 
-    public void setFontSize(int fontSizeInpx)
-    {
+    public void setFontSize(int fontSizeInpx) {
         loadUrl("javascript:editor.setFontSize(" + String.valueOf(fontSizeInpx) + ");");
     }
 
-    public void insertTextAtCursor(String text)
-    {
-        loadUrl("javascript:editor.insert(\"" + text +"\");");
+    public void insertTextAtCursor(String text) {
+        loadUrl("javascript:editor.insert(\"" + text + "\");");
     }
 
-    public void moveCursorForward(int pos)
-    {
+    public void moveCursorForward(int pos) {
         String command =
                 "javascript:var pos=editor.getCursorPosition();" +
-                "pos.column=(pos.column-" + pos +"<0?0:pos.column-"+pos+");" +
-                "editor.moveCursorToPosition(pos);";
+                        "pos.column=(pos.column-" + pos + "<0?0:pos.column-" + pos + ");" +
+                        "editor.moveCursorToPosition(pos);";
         loadUrl(command);
     }
 
-    public void requestText()
-    {
+    public void requestText() {
         requestedValue = Request.TEXT_REQUEST;
         loadUrl("javascript:alert(editor.getValue());");
     }
 
-    public void requestRowCount()
-    {
+    public void requestRowCount() {
         requestedValue = Request.ROW_COUNT_REQUEST;
         loadUrl("javascript:alert(editor.session.getLength());");
     }
 
-    public void requsetSelectedText()
-    {
+    public void requsetSelectedText() {
         requestedValue = Request.TEXT_REQUEST;
         loadUrl("javascript:alert(editor.getSelectedText());");
     }
 
-    public void requestCursorCoords()
-    {
+    public void requestCursorCoords() {
         requestedValue = Request.CURSOR_COORDS_REQUEST;
         loadUrl("javascript:alert(JSON.stringify(editor.getCursorPosition()))");
     }
 
-    public void requestLine(int lineNumber)
-    {
+    public void requestLine(int lineNumber) {
         requestedValue = Request.TEXT_REQUEST;
-        loadUrl("javascript:alert(editor.session.getLine("+ String.valueOf(lineNumber) + "));");
+        loadUrl("javascript:alert(editor.session.getLine(" + String.valueOf(lineNumber) + "));");
     }
 
-    public void requestLinesBetween(int startLine, int endLine)
-    {
+    public void requestLinesBetween(int startLine, int endLine) {
         requestedValue = Request.MULTIPLE_LINES_REQUEST;
-        loadUrl("javascript:alert(JSON.stringify(editor.session.getLines("+ String.valueOf(startLine) + ", "+ String.valueOf(endLine) + ")));");
+        loadUrl("javascript:alert(JSON.stringify(editor.session.getLines(" + String.valueOf(startLine) + ", " + String.valueOf(endLine) + ")));");
     }
 
-    public void startFind(String toFind, boolean backwards, boolean wrap, boolean caseSensitive, boolean wholeWord)
-    {
+    public void startFind(String toFind, boolean backwards, boolean wrap, boolean caseSensitive, boolean wholeWord) {
         findString = toFind;
-        loadUrl("javascript:editor.find('" + toFind + "', backwards: "+ String.valueOf(backwards) +
-                ", wrap: "+ String.valueOf(wrap) +
-                ",caseSensitive: "+ String.valueOf(caseSensitive) +
-                ",wholeWord: "+ String.valueOf(wholeWord) +",regExp: false});");
+        loadUrl("javascript:editor.find('" + toFind + "', backwards: " + String.valueOf(backwards) +
+                ", wrap: " + String.valueOf(wrap) +
+                ",caseSensitive: " + String.valueOf(caseSensitive) +
+                ",wholeWord: " + String.valueOf(wholeWord) + ",regExp: false});");
     }
 
-    public void findNext()
-    {
-        if(findString == null) {
+    public void findNext() {
+        if (findString == null) {
             return;
         }
         loadUrl("javascript:editor.findNext();");
     }
 
-    public void findNext(String errorToastMessage, int showFor)
-    {
-        if(findString == null) {
-            Toast.makeText(context,errorToastMessage,showFor).show();
+    public void findNext(String errorToastMessage, int showFor) {
+        if (findString == null) {
+            Toast.makeText(context, errorToastMessage, showFor).show();
             return;
         }
         loadUrl("javascript:editor.findNext();");
     }
 
-    public void findPrevious()
-    {
-        if(findString == null) {
+    public void findPrevious() {
+        if (findString == null) {
             return;
         }
         loadUrl("javascript:editor.findPrevious();");
     }
 
-    public void findPrevious(String toastMessage, int showFor)
-    {
-        if(findString == null) {
-            Toast.makeText(context,toastMessage,showFor).show();
+    public void findPrevious(String toastMessage, int showFor) {
+        if (findString == null) {
+            Toast.makeText(context, toastMessage, showFor).show();
             return;
         }
         loadUrl("javascript:editor.findPrevious();");
     }
 
-    public void replace(String replaceText, boolean replaceAll)
-    {
-        if(replaceAll)
+    public void replace(String replaceText, boolean replaceAll) {
+        if (replaceAll)
             loadUrl("javascript:editor.replaceAll('" + replaceText + "');");
         else
             loadUrl("javascript:editor.replace('" + replaceText + "');");
     }
 
-    public void endFind()
-    {
+    public void endFind() {
         findString = null;
     }
 
-    public void setSoftWrap(boolean enabled)
-    {
-        if(enabled)
+    public void setSoftWrap(boolean enabled) {
+        if (enabled)
             loadUrl("javascript:editor.getSession().setUseWrapMode(true);");
         else
             loadUrl("javascript:editor.getSession().setUseWrapMode(false);");
     }
 
-    public void setTheme(Theme theme)
-    {
+    public void setTheme(Theme theme) {
         loadUrl("javascript:editor.setTheme(\"ace/theme/" + theme.name().toLowerCase() + "\");");
     }
 
-    public void setMode(Mode mode)
-    {
+    public void setMode(Mode mode) {
         loadUrl("javascript:editor.session.setMode(\"ace/mode/" + mode.name().toLowerCase() + "\");");
     }
 
-    public void setTouchAction(int action)
-    {
-        if(action==ACTION_SCROLL)
+    public void setTouchAction(int action) {
+        if (action == ACTION_SCROLL)
             setOnTouchListener(scroller);
         else
             setOnTouchListener(selector);
     }
 
-    public static class Request{
+    public static class Request {
         public static int GENERIC_REQUEST = 0;
         public static int TEXT_REQUEST = 1;
         public static int ROW_COUNT_REQUEST = 2;
@@ -546,8 +509,7 @@ public class AceEditor extends WebView
         public static int MULTIPLE_LINES_REQUEST = 4;
     }
 
-    public static enum Theme
-    {
+    public static enum Theme {
         AMBIANCE, CHAOS, CHROME, CLOUDS,
         CLOUDS_MIDNIGHT, COBALT, CRIMSON_EDITOR, DAWN,
         DRACULA, DREAMWEAVER, ECLIPSE, GITHUB,
@@ -560,8 +522,7 @@ public class AceEditor extends WebView
         XCODE;
     }
 
-    public static enum Mode
-    {
+    public static enum Mode {
         ABAP, ABC, ActionScript, ADA, Apache_Conf,
         AsciiDoc, Assembly_x86, AutoHotKey, BatchFile, C9Search,
         C_Cpp, Cirru, Clojure, Cobol, coffee, ColdFusion,
