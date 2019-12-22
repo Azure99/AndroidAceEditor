@@ -25,6 +25,8 @@
 <script>
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/terminal")
+    editor.getSession().setMode("ace/mode/c_cpp");
     editor.setOptions({
         enableBasicAutocompletion: true,
         enableSnippets: true,

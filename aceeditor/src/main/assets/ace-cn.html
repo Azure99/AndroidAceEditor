@@ -24,6 +24,8 @@
 <script src="./src-noconflict/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 <script>
     ace.require("ace/ext/language_tools");
+    editor.setTheme("ace/theme/terminal")
+    editor.getSession().setMode("ace/mode/c_cpp");
     var editor = ace.edit("editor");
     editor.setOptions({
         enableBasicAutocompletion: true,
