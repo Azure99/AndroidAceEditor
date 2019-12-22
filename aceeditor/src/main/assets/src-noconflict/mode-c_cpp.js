@@ -76,7 +76,7 @@ var c_cppHighlightRules = function() {
     );
 
     var keywordOperators = (
-        "sizeof|namespace"
+        "sizeof|namespace|include"
     );
 
     var builtinConstants = (
