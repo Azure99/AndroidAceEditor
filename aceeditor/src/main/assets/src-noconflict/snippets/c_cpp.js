@@ -1,24 +1,7 @@
 ace.define("ace/snippets/c_cpp",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
-exports.snippetText = "## STL Collections\n\
-# vector\n\
-snippet vector\n\
-	vector<${1:T}> ${2};${3}\n\
-# set\n\
-snippet set\n\
-	set<${1:T}> ${2};${3}\n\
-# map\n\
-snippet map\n\
-	map<${1:Key}, ${2:T}> ${3};${4}\n\
-# stack\n\
-snippet stack\n\
-	stack<${1:T}> ${2};${3}\n\
-# queue\n\
-snippet queue\n\
-	queue<${1:T}> ${2};${3}\n\
-##\n\
-## Input/Output\n\
+exports.snippetText = "## Input/Output\n\
 # cout\n\
 snippet cout\n\
 	cout << ${1} << endl;${2}\n\
@@ -34,7 +17,7 @@ snippet scanf\n\
 ##\n\
 ## Iteration\n\
 # for i \n\
-snippet fori\n\
+snippet lfor\n\
 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {\n\
 		${4:/* code */}\n\
 	}${5}\n\
