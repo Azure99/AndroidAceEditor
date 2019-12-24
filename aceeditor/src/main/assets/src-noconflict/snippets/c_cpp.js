@@ -3,29 +3,29 @@ ace.define("ace/snippets/c_cpp",["require","exports","module"], function(require
 
 exports.snippetText = "## Input/Output\n\
 # cout\n\
-snippet cout\n\
+snippet icout\n\
 	cout << ${1} << endl;${2}\n\
 # cin\n\
-snippet cin\n\
+snippet icin\n\
 	cin >> ${1};${2}\n\
 # printf\n\
-snippet printf\n\
+snippet iprintf\n\
 	printf(\"${1}\");${2}\n\
 # scanf\n\
-snippet scanf\n\
+snippet iscanf\n\
 	scanf(\"${1}\", ${2})${3}\n\
 ##\n\
 ## Iteration\n\
 # for i \n\
-snippet lfor\n\
+snippet ifor\n\
 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {\n\
 		${4}\n\
 	}${5}\n\
-snippet lwhile\n\
+snippet iwhile\n\
 	while (${1}) {\n\
 		${2}\n\
 	}${3}\n\
-snippet lswtich\n\
+snippet iswtich\n\
 	switch (${1}) {\n\
 		default: ${2};\n\
 	}${3}\n\
@@ -34,8 +34,8 @@ snippet lswtich\n\
 # include\n\
 snippet iinclude\n\
 	#include <${1}>\n\
-# using namespace std\n\
-snippet std\n\
+# using namespace istd\n\
+snippet istd\n\
 	using namespace std;\n\
 # iostream\n\
 snippet iiostream\n\
@@ -46,7 +46,7 @@ snippet istdio\n\
 ##\n\
 ## main\n\
 # main\n\
-snippet fmain\n\
+snippet imain\n\
 	int main() {\n\
 		${1}\n\
 		return 0;\n\
