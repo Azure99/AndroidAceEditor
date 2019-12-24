@@ -3815,13 +3815,13 @@ exports.addTouchListeners = function(el, editor) {
         var updateMenu = function() {
             var selected = editor.getCopyText();
             var hasUndo = editor.session.getUndoManager().hasUndo();
+            var hasRedo = editor.session.getUndoManager().hasRedo();
             contextMenu.replaceChild(
                 dom.buildDom(isOpen ? ["span",
-                    !selected && ["span", { class: "ace_mobile-button", action: "selectall" }, "全选"],
-                    selected && ["span", { class: "ace_mobile-button", action: "copy" }, "复制"],
-                    selected && ["span", { class: "ace_mobile-button", action: "cut" }, "剪切"],
-                    clipboard && ["span", { class: "ace_mobile-button", action: "paste" }, "粘贴"],
+                    ["span", { class: "ace_mobile-button", action: "selectall" }, "全选"],
+                    ["span", { class: "ace_mobile-button", action: "selectwordleft" }, "选词"],
                     hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "撤销"],
+                    hasRedo && ["span", { class: "ace_mobile-button", action: "redo" }, "重做"],
                     ["span", { class: "ace_mobile-button", action: "find" }, "查找"],
                     ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "选项板"]
                 ] : ["span"]),

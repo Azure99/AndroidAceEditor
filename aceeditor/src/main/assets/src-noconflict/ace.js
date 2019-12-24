@@ -3815,14 +3815,15 @@ exports.addTouchListeners = function(el, editor) {
         var updateMenu = function() {
             var selected = editor.getCopyText();
             var hasUndo = editor.session.getUndoManager().hasUndo();
+            var hasRedo = editor.session.getUndoManager().hasRedo();
             contextMenu.replaceChild(
                 dom.buildDom(isOpen ? ["span",
-                    !selected && ["span", { class: "ace_mobile-button", action: "selectall" }, "Select All"],
-                    selected && ["span", { class: "ace_mobile-button", action: "copy" }, "Copy"],
-                    selected && ["span", { class: "ace_mobile-button", action: "cut" }, "Cut"],
-                    clipboard && ["span", { class: "ace_mobile-button", action: "paste" }, "Paste"],
+                    ["span", { class: "ace_mobile-button", action: "selectall" }, "Select All"],
+                    ["span", { class: "ace_mobile-button", action: "selectwordleft" }, "Word"],
                     hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "Undo"],
+                    hasRedo && ["span", { class: "ace_mobile-button", action: "redo" }, "Redo"],
                     ["span", { class: "ace_mobile-button", action: "find" }, "Find"],
+                    ["span", { class: "ace_mobile-button", action: "findnext" }, "Next"],
                     ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "Pallete"]
                 ] : ["span"]),
                 contextMenu.firstChild
