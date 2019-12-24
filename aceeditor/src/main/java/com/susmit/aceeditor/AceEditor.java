@@ -501,6 +501,10 @@ public class AceEditor extends WebView {
             setOnTouchListener(selector);
     }
 
+    public boolean getLoaded() {
+        return loadedUI;
+    }
+
     public static class Request {
         public static int GENERIC_REQUEST = 0;
         public static int TEXT_REQUEST = 1;
