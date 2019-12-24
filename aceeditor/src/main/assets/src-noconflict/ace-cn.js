@@ -3823,6 +3823,7 @@ exports.addTouchListeners = function(el, editor) {
                     hasUndo && ["span", { class: "ace_mobile-button", action: "undo" }, "撤销"],
                     hasRedo && ["span", { class: "ace_mobile-button", action: "redo" }, "重做"],
                     ["span", { class: "ace_mobile-button", action: "find" }, "查找"],
+                    ["span", { class: "ace_mobile-button", action: "findnext" }, "下一个"],
                     ["span", { class: "ace_mobile-button", action: "openCommandPallete" }, "选项板"]
                 ] : ["span"]),
                 contextMenu.firstChild
